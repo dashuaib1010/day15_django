@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">编辑部门</label>
+            <input id="exampleInputEmail1" class="form-control" name="department_name" placeholder="{{ item.department_name }}"
+                   aria-describedby="editHelp">
+            <div id="editHelp" class="form-text">正在编辑{{ item.id }}号部门</div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm">提交</button>
+    </form>
+</div>
+{% endblock %}

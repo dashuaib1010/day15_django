@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% load static %}
+
+
+{% block content %}
+    <div class="container" style="width: 500px;margin-top: 60px;">
+        <form novalidate method="POST" class="container"
+              style="padding: 40px; box-shadow: 15px 15px 30px -5px #888888;border-style: solid;border-width:1px;border-radius: 30px">
+            {% csrf_token %}
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <lable>{{ form.username.label }}</lable>
+                        <span style="color:red">{{ form.username.errors.0 }}</span>
+                    </div>
+
+                    <div class="col-sm-12">
+                        {{ form.username }}
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <lable>{{ form.password.label }}</lable>
+                        <span style="color:red">{{ form.password.errors.0 }}</span>
+                    </div>
+
+                    <div class="col-sm-12">
+                        {{ form.password }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <lable>{{ form.img_code.label }}</lable>
+                        <span style="color:red">{{ form.img_code.errors.0 }}</span>
+                    </div>
+
+                    <div class="col-sm-7">
+                        {{ form.img_code }}
+                    </div>
+                    <div class="col-sm-5">
+                        <img src='/image/code/' style="width:140px;height:30px;margin-top:3px ">
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">提交</button>
+
+        </form>
+    </div>
+
+{% endblock %}

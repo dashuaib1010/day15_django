@@ -1,0 +1,199 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container" style="margin-top: 20px;">
+        <div class="container" style="margin-top: 20px;">
+            <input type="button" value="图标" class="btn btn-primary">
+        </div>
+        <div class="container" style="margin-top: 20px;">
+            <div id="m1" style="width: 100%; height:300px;"></div>
+        </div>
+    </div>
+
+    <div class="container clearfix" style="margin-top: 20px;">
+        <div class="container row">
+            <div class="container col-sm-8" style="margin-top: 20px;">
+                <div id="m2" style="width: 100%;height:400px;"></div>
+            </div>
+
+            <div class="container col-sm-4" style="margin-top: 20px;">
+                <div id="m3" style="width: 100%;height:400px;">aasdfsdd</div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+{% block js %}
+    {#    <script src="{% static 'plugins/echarts/js/echarts.js' %}"></script>#}
+    {#    浏览器会缓存之前请求过的数据 如果这次引用的路径没有改变就不会发请求去申请已经拉过来的资源 所以如果用同名文件替换了资源 浏览器并不会显示更新后的效果 而是依旧为之前的显示效果   #}
+    <script src="{% static 'js/echarts.js' %}"></script>
+    <script type="text/javascript">
+        $(function () {
+            initBar();
+            initPie();
+            initLine();
+
+
+        })
+
+        // 基于准备好的dom，初始化echarts实例
+
+        function initBar() {
+            var myChart = echarts.init(document.getElementById('m2'));
+            var option = {
+                title: {
+                    text: 'ECharts',
+                    left: 'center',
+                },
+                tooltip: {},
+                legend: {
+                    data: [],
+                    bottom: 0,
+                },
+                xAxis: {
+                    data: []
+                },
+                yAxis: {},
+                series: []
+            };
+
+            $.ajax({
+                url: '/chart/bar/',
+                type: "get",
+                dataType: 'JSON',
+                success: function (res) {
+                    if (res.status) {
+                        option.legend.data = res.data.legend
+                        option.series = res.data.series
+                        option.xAxis.data = res.data.xAxis
+
+
+                        myChart.setOption(option);
+
+                    } else {
+                        alert(res.error)
+                    }
+                }
+            })
+        }
+
+        function initPie() {
+            var myChart = echarts.init(document.getElementById('m3'));
+
+            var option = {
+                title: {
+                    text: '部门预算占比',
+                    subtext: 'Fake Data',
+                    left: 'center',
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    bottom: 0,
+                },
+                series: [
+                    {
+                        name: '预算',
+                        type: 'pie',
+                        radius: '50%',
+                        data: [],
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    },
+                ]
+            };
+
+
+            $.ajax({
+                url: '/chart/pie/',
+                type: "get",
+                dataType: 'JSON',
+                success: function (res) {
+                    if (res.status) {
+                        option.series[0].data = res.data
+
+                        myChart.setOption(option);
+
+                    } else {
+                        alert(res.error)
+                    }
+                }
+            })
+
+        }
+
+        function initLine() {
+            var myChart = echarts.init(document.getElementById('m1'));
+            var option = {
+                title: {
+                    text: '平滑折线堆叠',
+                    left: 'center',
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: [],
+                    bottom: 0,
+                },
+                toolbox: {
+                    feature: {
+                        saveAsImage: {}
+                    }
+                },
+
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: []
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: []
+            };
+
+            $.ajax({
+                url: '/chart/line/',
+                type: "get",
+                dataType: 'JSON',
+                success: function (res) {
+                    if (res.status) {
+                        option.legend.data = res.data.legend
+                        option.series = res.data.series
+                        option.xAxis.data = res.data.xAxis
+
+
+                        myChart.setOption(option);
+
+                    } else {
+                        alert(res.error)
+                    }
+                }
+            })
+
+            myChart.setOption(option);
+
+
+        }
+
+
+        // 指定图表的配置项和数据
+
+
+        // 使用刚指定的配置项和数据显示图表。
+
+    </script>
+{% endblock %}

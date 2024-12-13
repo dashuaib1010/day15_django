@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="container" style="margin-top: 20px;">
+        <form method="POST" enctype="multipart/form-data" novalidate>
+            {% for field in form %}
+                <div style="margin-top: 10px;">
+                    <div>
+                        <lable>{{ field.label }}</lable>
+                        <span style="color:red">{{ field.errors.0 }}</span>
+
+                    </div>
+                    {{ field }}
+                </div>
+            {% endfor %}
+
+            <input type="submit" class="btn btn-primary" style="margin-top: 10px;">
+        </form>
+
+
+    </div>
+
+{% endblock %}

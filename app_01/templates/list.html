@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+    <div class="container clearfix" style="margin-top: 20px">
+        <a href="/{{ target_model_name }}/add">
+            <button type="button" class="btn btn-primary btn-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
+                     viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                </svg>
+                新建{{ target_model_label }}
+            </button>
+        </a>
+        <div style="float: right">
+            <form class="d-flex" method="GET">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query"
+                       value="{{ query_param }}">
+                <button class="btn btn-outline-success" type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <table class="table table-hover caption-top ">
+
+            <caption>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-ul"
+                     viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                </svg>
+                {{ target_model_label }}列表
+            </caption>
+            <thead class="table-light">
+            <tr>
+                <th scope="col">ID</th>
+                {% for field in form_fields %}
+                    <th scope="col">{{ field.1.label }}</th>
+                {% endfor %}
+                <th scope="col">重置密码</th>
+
+                <th scope="col">操作</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in data_list %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.username }}</td>
+                    <td>{{ item.password }}</td>
+                    <td>
+                        <a href="/{{ target_model_name }}/{{ item.id }}/reset_pwd/">重置密码</a>
+                    </td>
+                    <td>
+                        <a type="button" class="btn btn-success btn-sm"
+                           href="/{{ target_model_name }}/{{ item.id }}/edit/">编辑</a>
+                        <a type="button" class="btn btn-danger btn-sm"
+                           href="/{{ target_model_name }}/{{ item.id }}/delete/">删除</a>
+
+                    </td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="container">
+        <div style="float:left;">
+            <ul class="pagination">
+
+                {{ page_str }}
+
+
+            </ul>
+        </div>
+        <div style="float: left">
+            <form class="d-flex" style="margin-left: 20px" method="GET">
+                <input class="form-control me-2" type="search" placeholder="请输入页码" name="page"
+                       value="{{ page_param }}" style="width:120px">
+                <button class="btn btn-outline-success" type="submit" style="width: 80px">
+                    跳转
+                </button>
+            </form>
+        </div>
+
+    </div>
+
+
+{% endblock %}

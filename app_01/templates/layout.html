@@ -1,0 +1,99 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static "plugins/bootstrap-5.3.0-dist/css/bootstrap.css" %}">
+
+    {% block css %}{% endblock %}
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary ">
+    <div class="container">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" style="flex-grow: 0" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/list/">管理员用户</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/depart/list/">部门管理</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/list/">人员管理</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/prettynum/list/">靓号管理</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/task/list/">任务管理</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/chart/list/">图表分析</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        上传
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/upload/list/">文件上传</a></li>
+                        <li><a class="dropdown-item" href="/upload_modelform/list/">ModelForm文件上传</a></li>
+                    </ul>
+                </li>
+
+
+                {% if not request.session.info %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login/">登录</a>
+                    </li>
+                {% endif %}
+
+                {% if request.session.info %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            {{ request.session.info.username }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">我的信息</a></li>
+                            <li><a class="dropdown-item" href="#">余额</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="/logout/">登出</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
+
+                <li class="nav-item">
+                    <a class="nav-link disabled">Disabled</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<div>
+    {% block content %}
+
+
+    {% endblock %}
+</div>
+
+<script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-5.3.0-dist/js/bootstrap.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-5.3.0-dist/js/bootstrap.bundle.js' %}"></script>
+
+{% block js %}{% endblock %}
+
+</body>
+</html>

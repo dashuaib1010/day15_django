@@ -1,0 +1,87 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="container" style="margin-top: 20px">
+        <a href="/user/add">
+            <button type="button" class="btn btn-primary btn-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
+                     viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                </svg>
+                新建用户
+            </button>
+        </a>
+    </div>
+
+    <div class="container">
+        <table class="table table-hover caption-top ">
+
+            <caption>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-ul"
+                     viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                </svg>
+                用户列表
+            </caption>
+            <thead class="table-light">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">姓名</th>
+                <th scope="col">密码</th>
+                <th scope="col">年龄</th>
+                <th scope="col">账户余额</th>
+                <th scope="col">入职时间</th>
+                <th scope="col">部门</th>
+                <th scope="col">性别</th>
+                <th scope="col">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in data_list %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.password }}</td>
+                    <td>{{ item.age }}</td>
+                    <td>{{ item.account }}</td>
+                    <td>{{ item.create_time|date:"Y-m-d" }}</td>
+                    <td>{{ item.depart }}</td>
+                    <td>{{ item.get_gender_display }}</td>
+                    <td>
+                        <a type="button" class="btn btn-success btn-sm" href="/user/{{ item.id }}/edit/">编辑</a>
+                        <a type="button" class="btn btn-danger btn-sm" href="/user/{{ item.id }}/delete/">删除</a>
+
+                    </td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="container">
+        <div style="float:left;">
+            <ul class="pagination">
+
+                {{ page_str }}
+
+
+            </ul>
+        </div>
+        <div style="float: left">
+            <form class="d-flex" style="margin-left: 20px" method="GET">
+                <input class="form-control me-2" type="search" placeholder="请输入页码" name="page"
+                       value="{{ page_param }}" style="width:120px">
+                <button class="btn btn-outline-success" type="submit" style="width: 80px">
+                    跳转
+                </button>
+            </form>
+        </div>
+
+    </div>
+
+
+{% endblock %}
